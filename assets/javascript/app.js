@@ -31,6 +31,7 @@ var gameQuestions = {
 }
 
 var test=false;
+var correctAnswers =[];
 var number = 0;
 randomQ = Math.floor(Math.random() * (Object.keys(gameQuestions).length)); // random number up to size of object
 var one = gameQuestions.QuestionOne;
@@ -51,6 +52,8 @@ function findAns(oneAnswer){
 
   $(document).click(function(event) {
     if($(event.target).val() === oneAnswer){
+
+      correctAnswers.push(oneAnswer);
 
       $("#displayA").html("Correct!"+ " " + oneAnswer + " is the answer!" + "</ br>")
       console.clear();
@@ -172,6 +175,7 @@ setTimeout(countDown,1000);
   setTimeout(countDown2,1000);
 runTheGame(gameQuestions,number);
 console.log(m);
+console.log(correctAnswers);
 // setTimeout(function(){ $("#displayA").append("game over! Game is restarting..(Not reload, restarting function)")
 // location.reload();
 // setTimeout(countDown,1000);
