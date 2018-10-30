@@ -1,3 +1,8 @@
+//This game is unfinished and I tried to comment where I tried to do what
+// I was struggling with making the timer work properly (temporarily set to 5 seconds for testing)
+// I am also out of time as of when Im writing this note and will aim to finish this at a later time for
+// a better grade hopefully.
+
 
 $("#strtBtn").click(function(){
 
