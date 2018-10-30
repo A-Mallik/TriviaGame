@@ -8,31 +8,44 @@ $("#strtBtn").click(function(){
 
 var gameQuestions = {
 
-      QuestionOne:{
-         question: "In what place was Christmas once illegal?",
-         choices: ["England", "France", "Brazil","Russia"],
-         answer: "France"
-       },
+  QuestionOne:{
+     question: "In what place was Christmas once illegal?",
+     choices: ["England", "France", "Brazil","Russia"],
+     answer: "England"
+   },
 
-       QuestionTwo:{
-         question: "In California, it is illegal to eat oranges while doing what?",
-         choices: ["Gardening", "Bathing", "Driving","Working on a computer"],
-         answer: "Gardening",
-       },
+   QuestionTwo:{
+     question: "In California, it is illegal to eat oranges while doing whats?",
+     choices: ["Gardening", "Bathing", "Driving","Working on a computer"],
+     answer: "Bathing",
+   },
 
-       QuestionThree:{
-         question: "Coulrophobia means fear of what?",
-         choices: ["Sacred Things", "Clowns", "Old People","Jews"],
-         answer: "Clowns",
-       },
+   QuestionThree:{
+     question: "Coulrophobia means fear of what?",
+     choices: ["Sacred Things", "Clowns", "Old People","Jews"],
+     answer: "Clowns",
+   },
 
+   QuestionFour:{
+     question: "How many pounds of pressure do you need to rip off your ear?",
+     choices: ["11", "17", "7","2"],
+     answer: "7",
+   },
+
+   QuestionBonus:{
+     question: "Which of the following is the longest running American animated TV show??",
+     choices: ["TV Funhouse", "Rugrats", "Simpsons","Pokemon"],
+     answer: "Simpsons",
+   }
 
 
 }
 
 var test=false;
-var correctAnswers =[];
 var number = 0;
+var number2 = 1;
+var number3 = 1;
+var correctAnswers= [];
 randomQ = Math.floor(Math.random() * (Object.keys(gameQuestions).length)); // random number up to size of object
 var one = gameQuestions.QuestionOne;
 var two = gameQuestions.QuestionTwo;
@@ -42,29 +55,41 @@ var oneChoices = one.choices;
 var oneAnswer = gameQuestions.QuestionOne.answer;
 //console.log(gameQuestions.QuestionOne.qOne);
 
-function displayChoice(OneChoices){
+function displayChoice(OneChoices){    // display the question and choices as a button
   for(var i = 0; i < OneChoices.length; i++){
        $("#displayQ").append("<br />" + "<input type='button' class='btn btn-primary' value= " + OneChoices[i] + ">" + "<br />");
+
   }
 };
 
-function findAns(oneAnswer){
+function findAns(oneAnswer){     // actions depending on if answer is found.
 
   $(document).click(function(event) {
     if($(event.target).val() === oneAnswer){
-
-      correctAnswers.push(oneAnswer);
-
+      Time = 5;
       $("#displayA").html("Correct!"+ " " + oneAnswer + " is the answer!" + "</ br>")
       console.clear();
       $("#displayQ").empty();
-    //  $("#displayA").append(oneAnswer);
 
-      // $(document).dequeue(function(){setTimeout(countDown2,1000) });
-      // setTimeout(countDown,1000);
-      // setTimeout(countDown2,1000)
-       runTheGame(gameQuestions,number);
+        runTheGame(gameQuestions,number2);
+        clearInterval(myTimer);
+        if(correctAnswers.indexOf($(event.target).val())){    //check if array has answers or else push into array
+          return;
+        }else{
+        correctAnswers.push($(event.target).val());
+      }
+        $("#correct").html("Your correct answers: " + correctAnswers);
 
+        var myTimer = setInterval(function(){
+            if(Time!=0){
+            //  Time--;
+            };
+
+
+        //  console.log(Time3);
+
+
+        }, 1000);
 
     }
   });
@@ -79,13 +104,7 @@ function findAns(oneAnswer){
 
 
 
-  //    for(var i = 0; i < Object.keys(gameQuestions).length; i++){                 // for loop questions
-     //      console.log(gameQuestions[Object.keys(gameQuestions)[i]].choices)
-     // }
-
-    //   $("p1").append(gameQuestions[Object.keys(gameQuestions)[0]].question + " " + "<input type='button' value= " + gameQuestions[Object.keys(gameQuestions)[0]].choices+ ">" + "<br />"); // generate the questions randomly
-//console.log(test);
-//setTimeout(function(){
+//display the answers in an array (Unusued)
 
 function displayAnswer(oneAnswer){
 
@@ -101,103 +120,48 @@ function runTheGame(gameQuestions,number){
               findAns(gameQuestions[Object.keys(gameQuestions)[number]].answer);
               displayChoice(gameQuestions[Object.keys(gameQuestions)[number]].choices);
 
-              //console.log(number);
-              j=5;
-
-
-              // counter++;
-
-              //}, 1000);
-
-              //   continue;
-
-
 }
 var j = 5;
 var m;
 
 
+//Counter for seconds left
+var Time = 5;
+
+//-------
+//Timer for seconds left
+//-------
+var myTimer = setInterval(function(){
+    if(Time!=0){
+      Time--;
+    };
+
+  console.log(Time);
+  $("#timer").html("You have " + Time + " seconds left!")
+
+}, 1000);
+
+
 //----------------
+var Time2= 5;
 
-
-
-function countDown(){
-   k--;
-
-
-   if(k > 0){
-      setTimeout(countDown,5000);
-   }
-
-  // console.log(j);
-   runTheGame(gameQuestions, number++);
-  m = number;
-   //j=5;
-   if(number === 2){
-     return;
-     console.log(number);
-   }
-
-
-}
-
-function countDown2(){
-   j--;
-
-   if(j >= 0){
-      setTimeout(countDown2,1000);
-
-   }
-
-   console.log(j);
-   if(j >=0){
-     // if(j === 0 ){
-     //
-     //   setTimeout(function(){
-     //
-     //          $("#displayA").html("Time's Up!<br/> The answer is: " + displayAnswer(gameQuestions[Object.keys(gameQuestions)[number]].answer));
-     //
-     //    }, 3000);
-     //
-     //
-     //
-     //
-     // }
-   $("#timer").html("Time Left for This Question: <br/>" + j);
-    }
-
-
-}
-
-var k = 3;
-//var j = 5;
-setTimeout(countDown,1000);
-  setTimeout(countDown2,1000);
+//------- runs the game for limit of seconds selected, in my case only 5 seconds to test functionality
+//
 runTheGame(gameQuestions,number);
-console.log(m);
-console.log(correctAnswers);
-// setTimeout(function(){ $("#displayA").append("game over! Game is restarting..(Not reload, restarting function)")
-// location.reload();
-// setTimeout(countDown,1000);
-//   setTimeout(countDown2,1000);
-// runTheGame(gameQuestions,number);
-//
-//
-// }, 15000);
+var myGame = setInterval(function(){
+    if(Time2!=0){
+      Time2--;
+    };
 
+ if(number2 != 4){
+runTheGame(gameQuestions,number2++);
 
-// $(document).click(function(event) {
-// if($(event.target).val() === gameQuestions[Object.keys(gameQuestions)[number]].answer){
-// $("#displayQ").empty();
-//   // setTimeout(countDown,1000);
-//   //   setTimeout(countDown2,1000);
-//       //  runTheGame(gameQuestions,number++);
-//          if(number === 2){
-//            alert("game over!");}
-//
-//          }
-//
-//
-//
-//
-// });
+}
+ else{
+   clearInterval(myTimer);
+ }
+
+ Time = 5;
+ $("#displayC").html("Correct Answers: " + correctAnswers);
+
+}, 5000);
